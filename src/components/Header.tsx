@@ -1,6 +1,7 @@
 import { Link } from "@tanstack/react-router";
-import { Brain, Menu, Sparkles, Trophy, Target, Zap } from "lucide-react";
+import { Menu, Sparkles, Trophy, Target, Zap } from "lucide-react";
 import { useState } from "react";
+import logoUrl from "@/assets/logo-piata.png";
 
 const navItems = [
   { to: "/", label: "Partidas", icon: Trophy },
