@@ -34,25 +34,23 @@ function LowOddsPage() {
       </section>
 
       <main className="container-app py-8">
-        <PaywallBlur>
-          <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4 max-w-5xl mx-auto">
-            {sorted.map((p, i) => (
-              <Link
-                key={i}
-                to="/partida/$id"
-                params={{ id: p.matchId }}
-                className="bg-card border border-border rounded-2xl p-5 hover:border-primary/40 transition-colors"
-              >
-                <div className="text-xs text-muted-foreground mb-1">{p.label}</div>
-                <div className="font-display font-bold mb-3">{p.market}</div>
-                <div className="flex items-center justify-between">
-                  <ConfidenceBadge level={p.confidence} compact />
-                  <span className="font-display font-extrabold text-2xl text-primary">{p.odd.toFixed(2)}</span>
-                </div>
-              </Link>
-            ))}
-          </div>
-        </PaywallBlur>
+        <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4 max-w-5xl mx-auto">
+          {sorted.map((p, i) => (
+            <Link
+              key={i}
+              to="/partida/$id"
+              params={{ id: p.matchId }}
+              className="bg-card border border-border rounded-2xl p-5 hover:border-primary/40 transition-colors"
+            >
+              <div className="text-xs text-muted-foreground mb-1">{p.label}</div>
+              <div className="font-display font-bold mb-3">{p.market}</div>
+              <div className="flex items-center justify-between">
+                <ConfidenceBadge level={p.confidence} compact />
+                <span className="font-display font-extrabold text-2xl text-primary">{p.odd.toFixed(2)}</span>
+              </div>
+            </Link>
+          ))}
+        </div>
       </main>
       <Footer />
     </div>
