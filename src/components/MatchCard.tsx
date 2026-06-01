@@ -2,7 +2,6 @@ import { Link } from "@tanstack/react-router";
 import { ArrowRight, Calendar, MapPin } from "lucide-react";
 import type { Match } from "@/lib/mock-data";
 import { ConfidenceBadge } from "./ConfidenceBadge";
-import { PaywallBlur } from "./PaywallBlur";
 
 function formatTime(iso: string) {
   return new Date(iso).toLocaleString("pt-BR", {
@@ -12,22 +11,8 @@ function formatTime(iso: string) {
   });
 }
 
-export function MatchCard({ match, locked = true }: { match: Match; locked?: boolean }) {
+export function MatchCard({ match }: { match: Match }) {
   const previewMarkets = match.topMarkets;
-
-  const Inner = (
-    <div className="space-y-2.5">
-      {previewMarkets.map((m) => (
-        <div key={m.market} className="flex items-start justify-between gap-3 p-3 rounded-xl bg-secondary/60">
-          <div className="min-w-0">
-            <div className="text-xs text-muted-foreground">{m.market}</div>
-            <div className="font-semibold text-sm truncate">{m.pick}</div>
-          </div>
-          <ConfidenceBadge level={m.confidence} compact />
-        </div>
-      ))}
-    </div>
-  );
 
   return (
     <article className="bg-card border border-border rounded-2xl overflow-hidden hover:border-primary/40 transition-colors">
@@ -60,7 +45,17 @@ export function MatchCard({ match, locked = true }: { match: Match; locked?: boo
       </div>
 
       <div className="px-5 pb-5">
-        {locked ? <PaywallBlur>{Inner}</PaywallBlur> : Inner}
+        <div className="space-y-2.5">
+          {previewMarkets.map((m) => (
+            <div key={m.market} className="flex items-start justify-between gap-3 p-3 rounded-xl bg-secondary/60">
+              <div className="min-w-0">
+                <div className="text-xs text-muted-foreground">{m.market}</div>
+                <div className="font-semibold text-sm truncate">{m.pick}</div>
+              </div>
+              <ConfidenceBadge level={m.confidence} compact />
+            </div>
+          ))}
+        </div>
       </div>
 
       <Link

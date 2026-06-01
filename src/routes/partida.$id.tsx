@@ -4,7 +4,6 @@ import type { Match, MarketPick } from "@/lib/mock-data";
 import { Header } from "@/components/Header";
 import { Footer } from "@/components/Footer";
 import { ConfidenceBadge } from "@/components/ConfidenceBadge";
-import { PaywallBlur } from "@/components/PaywallBlur";
 import { matches } from "@/lib/mock-data";
 
 export const Route = createFileRoute("/partida/$id")({
@@ -246,27 +245,25 @@ function MatchPage() {
             Análise por mercado
           </h2>
 
-          <PaywallBlur message="Acesso a todos os 24 mercados analisados">
-            <div className="grid md:grid-cols-2 gap-4">
-              {match.allMarkets.map((m) => (
-                <div key={m.market} className="bg-card border border-border rounded-2xl p-5">
-                  <div className="flex items-start justify-between gap-3 mb-3">
-                    <div className="min-w-0">
-                      <div className="text-xs text-muted-foreground font-semibold uppercase tracking-wide">{m.market}</div>
-                      <div className="font-display font-bold text-lg mt-0.5">{m.pick}</div>
-                    </div>
-                    <ConfidenceBadge level={m.confidence} compact />
+          <div className="grid md:grid-cols-2 gap-4">
+            {match.allMarkets.map((m) => (
+              <div key={m.market} className="bg-card border border-border rounded-2xl p-5">
+                <div className="flex items-start justify-between gap-3 mb-3">
+                  <div className="min-w-0">
+                    <div className="text-xs text-muted-foreground font-semibold uppercase tracking-wide">{m.market}</div>
+                    <div className="font-display font-bold text-lg mt-0.5">{m.pick}</div>
                   </div>
-                  <p className="text-sm text-muted-foreground">{m.reason}</p>
-                  {m.odd && (
-                    <div className="mt-3 inline-flex items-center gap-2 text-xs bg-gold/15 text-gold rounded-full px-2.5 py-1 font-bold">
-                      Odd estimada: {m.odd.toFixed(2)}
-                    </div>
-                  )}
+                  <ConfidenceBadge level={m.confidence} compact />
                 </div>
-              ))}
-            </div>
-          </PaywallBlur>
+                <p className="text-sm text-muted-foreground">{m.reason}</p>
+                {m.odd && (
+                  <div className="mt-3 inline-flex items-center gap-2 text-xs bg-gold/15 text-gold rounded-full px-2.5 py-1 font-bold">
+                    Odd estimada: {m.odd.toFixed(2)}
+                  </div>
+                )}
+              </div>
+            ))}
+          </div>
         </section>
 
         {/* Stats */}
