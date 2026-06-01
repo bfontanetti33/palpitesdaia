@@ -16,11 +16,15 @@ export function Header() {
     <>
       <header className="sticky top-0 z-40 backdrop-blur-xl bg-background/80 border-b border-border">
         <div className="container-app flex items-center justify-between h-16">
-          <Link to="/" className="flex items-center gap-2 font-display font-extrabold text-lg">
-            <span className="w-9 h-9 rounded-xl bg-primary text-primary-foreground grid place-items-center">
-              <Brain className="w-5 h-5" />
-            </span>
-            <span>
+          <Link to="/" className="flex items-center gap-2.5 font-display font-extrabold text-lg">
+            <img
+              src={logoUrl}
+              alt="Palpites da I.A"
+              width={40}
+              height={40}
+              className="w-10 h-10 object-contain drop-shadow-[0_0_12px_rgba(34,197,94,0.35)]"
+            />
+            <span className="tracking-tight">
               Palpites <span className="text-primary">da I.A</span>
             </span>
           </Link>
