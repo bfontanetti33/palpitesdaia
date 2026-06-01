@@ -1,6 +1,6 @@
-import { createFileRoute } from "@tanstack/react-router";
+import { createFileRoute, Link } from "@tanstack/react-router";
 import { useState } from "react";
-import { Brain, Sparkles } from "lucide-react";
+import { Brain, Sparkles, ShieldCheck, Database, TrendingUp, Trophy, Zap, ArrowRight } from "lucide-react";
 import { Header } from "@/components/Header";
 import { Footer } from "@/components/Footer";
 import { MatchCard } from "@/components/MatchCard";
