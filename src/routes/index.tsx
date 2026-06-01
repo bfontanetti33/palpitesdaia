@@ -37,13 +37,12 @@ function Home() {
             Análises completas em segundos
           </div>
           <h1 className="font-display font-extrabold text-4xl md:text-6xl leading-[1.05] max-w-4xl">
-            Previsões de futebol baseadas em{" "}
-            <span className="text-primary">dados</span>,{" "}
-            <span className="text-gold">não em achismo.</span>
+            O <span className="text-primary">fim do achismo</span> nas suas{" "}
+            <span className="text-gold">apostas</span> começa aqui.
           </h1>
           <p className="text-muted-foreground mt-5 text-lg md:text-xl max-w-2xl">
-            Descubra hoje quem tem mais chance de vencer — <strong className="text-foreground">antes de apostar</strong>.
-            Nossa IA analisa milhares de partidas, estatísticas de times, jogadores e árbitros pra te dar vantagem real.
+            Chega de palpite de boteco. Nossa IA processa milhares de jogos, escalações, árbitros e estatísticas em segundos —{" "}
+            <strong className="text-foreground">e te entrega as apostas com maior probabilidade de bater</strong>, antes da bola rolar.
           </p>
 
           <div className="flex flex-wrap gap-3 mt-7">
