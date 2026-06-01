@@ -125,8 +125,8 @@ function Home() {
           <p className="text-muted-foreground text-center py-12">Nenhuma partida nesta liga hoje.</p>
         ) : (
           <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-5">
-            {visible.map((m, i) => (
-              <MatchCard key={m.id} match={m} locked={i > 0} />
+            {visible.map((m) => (
+              <MatchCard key={m.id} match={m} />
             ))}
           </div>
         )}
