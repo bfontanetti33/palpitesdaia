@@ -9,38 +9,155 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
+import { Route as ZebrasRouteImport } from './routes/zebras'
+import { Route as PlanosRouteImport } from './routes/planos'
+import { Route as OddsBaixasRouteImport } from './routes/odds-baixas'
+import { Route as LoginRouteImport } from './routes/login'
+import { Route as BingosRouteImport } from './routes/bingos'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as PartidaIdRouteImport } from './routes/partida.$id'
 
+const ZebrasRoute = ZebrasRouteImport.update({
+  id: '/zebras',
+  path: '/zebras',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const PlanosRoute = PlanosRouteImport.update({
+  id: '/planos',
+  path: '/planos',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const OddsBaixasRoute = OddsBaixasRouteImport.update({
+  id: '/odds-baixas',
+  path: '/odds-baixas',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const LoginRoute = LoginRouteImport.update({
+  id: '/login',
+  path: '/login',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const BingosRoute = BingosRouteImport.update({
+  id: '/bingos',
+  path: '/bingos',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const PartidaIdRoute = PartidaIdRouteImport.update({
+  id: '/partida/$id',
+  path: '/partida/$id',
+  getParentRoute: () => rootRouteImport,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/bingos': typeof BingosRoute
+  '/login': typeof LoginRoute
+  '/odds-baixas': typeof OddsBaixasRoute
+  '/planos': typeof PlanosRoute
+  '/zebras': typeof ZebrasRoute
+  '/partida/$id': typeof PartidaIdRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/bingos': typeof BingosRoute
+  '/login': typeof LoginRoute
+  '/odds-baixas': typeof OddsBaixasRoute
+  '/planos': typeof PlanosRoute
+  '/zebras': typeof ZebrasRoute
+  '/partida/$id': typeof PartidaIdRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/bingos': typeof BingosRoute
+  '/login': typeof LoginRoute
+  '/odds-baixas': typeof OddsBaixasRoute
+  '/planos': typeof PlanosRoute
+  '/zebras': typeof ZebrasRoute
+  '/partida/$id': typeof PartidaIdRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/'
+  fullPaths:
+    | '/'
+    | '/bingos'
+    | '/login'
+    | '/odds-baixas'
+    | '/planos'
+    | '/zebras'
+    | '/partida/$id'
   fileRoutesByTo: FileRoutesByTo
-  to: '/'
-  id: '__root__' | '/'
+  to:
+    | '/'
+    | '/bingos'
+    | '/login'
+    | '/odds-baixas'
+    | '/planos'
+    | '/zebras'
+    | '/partida/$id'
+  id:
+    | '__root__'
+    | '/'
+    | '/bingos'
+    | '/login'
+    | '/odds-baixas'
+    | '/planos'
+    | '/zebras'
+    | '/partida/$id'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  BingosRoute: typeof BingosRoute
+  LoginRoute: typeof LoginRoute
+  OddsBaixasRoute: typeof OddsBaixasRoute
+  PlanosRoute: typeof PlanosRoute
+  ZebrasRoute: typeof ZebrasRoute
+  PartidaIdRoute: typeof PartidaIdRoute
 }
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
+    '/zebras': {
+      id: '/zebras'
+      path: '/zebras'
+      fullPath: '/zebras'
+      preLoaderRoute: typeof ZebrasRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/planos': {
+      id: '/planos'
+      path: '/planos'
+      fullPath: '/planos'
+      preLoaderRoute: typeof PlanosRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/odds-baixas': {
+      id: '/odds-baixas'
+      path: '/odds-baixas'
+      fullPath: '/odds-baixas'
+      preLoaderRoute: typeof OddsBaixasRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/login': {
+      id: '/login'
+      path: '/login'
+      fullPath: '/login'
+      preLoaderRoute: typeof LoginRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/bingos': {
+      id: '/bingos'
+      path: '/bingos'
+      fullPath: '/bingos'
+      preLoaderRoute: typeof BingosRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/': {
       id: '/'
       path: '/'
@@ -48,22 +165,25 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/partida/$id': {
+      id: '/partida/$id'
+      path: '/partida/$id'
+      fullPath: '/partida/$id'
+      preLoaderRoute: typeof PartidaIdRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  BingosRoute: BingosRoute,
+  LoginRoute: LoginRoute,
+  OddsBaixasRoute: OddsBaixasRoute,
+  PlanosRoute: PlanosRoute,
+  ZebrasRoute: ZebrasRoute,
+  PartidaIdRoute: PartidaIdRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
   ._addFileTypes<FileRouteTypes>()
-
-import type { getRouter } from './router.tsx'
-import type { startInstance } from './start.ts'
-declare module '@tanstack/react-start' {
-  interface Register {
-    ssr: true
-    router: Awaited<ReturnType<typeof getRouter>>
-    config: Awaited<ReturnType<typeof startInstance.getOptions>>
-  }
-}
