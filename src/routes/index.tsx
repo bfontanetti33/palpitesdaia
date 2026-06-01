@@ -115,7 +115,7 @@ function Home() {
         </div>
       </div>
 
-      <main className="container-app py-8">
+      <main id="partidas" className="container-app py-8">
         <div className="flex items-center justify-between mb-6">
           <h2 className="font-display font-extrabold text-2xl">Partidas do dia</h2>
           <span className="text-sm text-muted-foreground">{visible.length} jogos</span>
@@ -133,6 +133,31 @@ function Home() {
       </main>
 
       <Footer />
+    </div>
+  );
+}
+
+function ProofCard({
+  icon: Icon,
+  title,
+  big,
+  desc,
+}: {
+  icon: typeof Brain;
+  title: string;
+  big: string;
+  desc: string;
+}) {
+  return (
+    <div className="bg-card/60 border border-border rounded-2xl p-5 backdrop-blur">
+      <div className="flex items-center gap-2 text-xs font-bold text-muted-foreground uppercase tracking-wide mb-3">
+        <Icon className="w-4 h-4 text-primary" />
+        {title}
+      </div>
+      <div className="font-display font-extrabold text-3xl md:text-4xl text-foreground leading-none">
+        {big}
+      </div>
+      <p className="text-sm text-muted-foreground mt-2 leading-snug">{desc}</p>
     </div>
   );
 }
