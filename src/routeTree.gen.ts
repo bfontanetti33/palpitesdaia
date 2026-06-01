@@ -10,12 +10,18 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as ZebrasRouteImport } from './routes/zebras'
+import { Route as BingosRouteImport } from './routes/bingos'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as PartidaIdRouteImport } from './routes/partida.$id'
 
 const ZebrasRoute = ZebrasRouteImport.update({
   id: '/zebras',
   path: '/zebras',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const BingosRoute = BingosRouteImport.update({
+  id: '/bingos',
+  path: '/bingos',
   getParentRoute: () => rootRouteImport,
 } as any)
 const IndexRoute = IndexRouteImport.update({
@@ -31,30 +37,34 @@ const PartidaIdRoute = PartidaIdRouteImport.update({
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/bingos': typeof BingosRoute
   '/zebras': typeof ZebrasRoute
   '/partida/$id': typeof PartidaIdRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/bingos': typeof BingosRoute
   '/zebras': typeof ZebrasRoute
   '/partida/$id': typeof PartidaIdRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/bingos': typeof BingosRoute
   '/zebras': typeof ZebrasRoute
   '/partida/$id': typeof PartidaIdRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/zebras' | '/partida/$id'
+  fullPaths: '/' | '/bingos' | '/zebras' | '/partida/$id'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/zebras' | '/partida/$id'
-  id: '__root__' | '/' | '/zebras' | '/partida/$id'
+  to: '/' | '/bingos' | '/zebras' | '/partida/$id'
+  id: '__root__' | '/' | '/bingos' | '/zebras' | '/partida/$id'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  BingosRoute: typeof BingosRoute
   ZebrasRoute: typeof ZebrasRoute
   PartidaIdRoute: typeof PartidaIdRoute
 }
@@ -66,6 +76,13 @@ declare module '@tanstack/react-router' {
       path: '/zebras'
       fullPath: '/zebras'
       preLoaderRoute: typeof ZebrasRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/bingos': {
+      id: '/bingos'
+      path: '/bingos'
+      fullPath: '/bingos'
+      preLoaderRoute: typeof BingosRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/': {
@@ -87,6 +104,7 @@ declare module '@tanstack/react-router' {
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  BingosRoute: BingosRoute,
   ZebrasRoute: ZebrasRoute,
   PartidaIdRoute: PartidaIdRoute,
 }
