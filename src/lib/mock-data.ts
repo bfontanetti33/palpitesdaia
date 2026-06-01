@@ -39,10 +39,8 @@ export interface Match {
   summary: string;
 }
 
-const logo = (txt: string, bg: string) =>
-  `data:image/svg+xml;utf8,${encodeURIComponent(
-    `<svg xmlns='http://www.w3.org/2000/svg' width='64' height='64'><circle cx='32' cy='32' r='30' fill='${bg}'/><text x='50%' y='55%' font-family='Inter,sans-serif' font-size='22' font-weight='800' fill='white' text-anchor='middle'>${txt}</text></svg>`,
-  )}`;
+const shield = (apiSportsId: number) =>
+  `https://media.api-sports.io/football/teams/${apiSportsId}.png`;
 
 const today = new Date();
 const at = (h: number, m = 0, offsetDays = 0) => {
