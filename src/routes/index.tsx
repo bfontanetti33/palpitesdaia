@@ -31,25 +31,64 @@ function Home() {
       <Header />
 
       <section className="field-gradient border-b border-border">
-        <div className="container-app py-10 md:py-16">
-          <div className="inline-flex items-center gap-2 bg-primary/15 text-primary px-3 py-1.5 rounded-full text-xs font-bold uppercase tracking-wider mb-4">
-            <Brain className="w-3.5 h-3.5" />
-            Powered by I.A
+        <div className="container-app py-12 md:py-20">
+          <div className="inline-flex items-center gap-2 bg-primary/15 text-primary px-3 py-1.5 rounded-full text-xs font-bold uppercase tracking-wider mb-5">
+            <Zap className="w-3.5 h-3.5" />
+            Análises completas em segundos
           </div>
-          <h1 className="font-display font-extrabold text-4xl md:text-6xl leading-[1.05] max-w-3xl">
-            A <span className="text-primary">pelada certa</span> pra apostar,{" "}
-            <span className="text-gold">analisada pela IA.</span>
+          <h1 className="font-display font-extrabold text-4xl md:text-6xl leading-[1.05] max-w-4xl">
+            Previsões de futebol baseadas em{" "}
+            <span className="text-primary">dados</span>,{" "}
+            <span className="text-gold">não em achismo.</span>
           </h1>
-          <p className="text-muted-foreground mt-4 text-lg max-w-2xl">
-            Dados reais de times, jogadores e árbitros. Recomendações para mais de 20 mercados em cada partida.
+          <p className="text-muted-foreground mt-5 text-lg md:text-xl max-w-2xl">
+            Descubra hoje quem tem mais chance de vencer — <strong className="text-foreground">antes de apostar</strong>.
+            Nossa IA analisa milhares de partidas, estatísticas de times, jogadores e árbitros pra te dar vantagem real.
           </p>
-          <div className="flex items-center gap-4 mt-6 text-sm">
-            <div className="flex items-center gap-1.5">
-              <Sparkles className="w-4 h-4 text-gold" />
-              <span><strong className="text-foreground">1.200+</strong> ligas cobertas</span>
-            </div>
-            <div className="w-px h-4 bg-border" />
-            <div><strong className="text-foreground">24</strong> mercados por jogo</div>
+
+          <div className="flex flex-wrap gap-3 mt-7">
+            <Link
+              to="/planos"
+              className="inline-flex items-center gap-2 px-6 py-3.5 rounded-xl bg-gold text-gold-foreground font-bold hover:opacity-90"
+            >
+              <Sparkles className="w-4 h-4" />
+              Começar com 5 análises grátis
+            </Link>
+            <a
+              href="#partidas"
+              className="inline-flex items-center gap-2 px-6 py-3.5 rounded-xl bg-secondary text-foreground font-bold hover:bg-secondary/70"
+            >
+              Ver partidas de hoje
+              <ArrowRight className="w-4 h-4" />
+            </a>
+          </div>
+
+          {/* Proof stats grid */}
+          <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-3 mt-10">
+            <ProofCard
+              icon={ShieldCheck}
+              title="Precisão recente"
+              big="78%"
+              desc="de acerto nos resultados mais apostados da semana"
+            />
+            <ProofCard
+              icon={Database}
+              title="IA treinada com jogos reais"
+              big="+10.000"
+              desc="partidas analisadas pra gerar previsões mais precisas"
+            />
+            <ProofCard
+              icon={TrendingUp}
+              title="Melhora a cada rodada"
+              big="24/7"
+              desc="o modelo aprende e ajusta as previsões a cada jogo"
+            />
+            <ProofCard
+              icon={Trophy}
+              title="Principais ligas cobertas"
+              big="1.200+"
+              desc="Brasileirão, Premier, Champions, La Liga, Libertadores e mais"
+            />
           </div>
         </div>
       </section>
