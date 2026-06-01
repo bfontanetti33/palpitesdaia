@@ -1,5 +1,6 @@
 import { createFileRoute, notFound, Link } from "@tanstack/react-router";
-import { ArrowLeft, Calendar, MapPin, Users, Whistle as WhistleIcon } from "lucide-react";
+import { ArrowLeft, Calendar, MapPin, Users, Flag as WhistleIcon } from "lucide-react";
+import type { Match, MarketPick } from "@/lib/mock-data";
 import { Header } from "@/components/Header";
 import { Footer } from "@/components/Footer";
 import { ConfidenceBadge } from "@/components/ConfidenceBadge";
