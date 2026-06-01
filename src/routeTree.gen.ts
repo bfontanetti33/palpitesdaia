@@ -11,6 +11,7 @@
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as ZebrasRouteImport } from './routes/zebras'
 import { Route as OddsBaixasRouteImport } from './routes/odds-baixas'
+import { Route as LoginRouteImport } from './routes/login'
 import { Route as BingosRouteImport } from './routes/bingos'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as PartidaIdRouteImport } from './routes/partida.$id'
@@ -23,6 +24,11 @@ const ZebrasRoute = ZebrasRouteImport.update({
 const OddsBaixasRoute = OddsBaixasRouteImport.update({
   id: '/odds-baixas',
   path: '/odds-baixas',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const LoginRoute = LoginRouteImport.update({
+  id: '/login',
+  path: '/login',
   getParentRoute: () => rootRouteImport,
 } as any)
 const BingosRoute = BingosRouteImport.update({
@@ -44,6 +50,7 @@ const PartidaIdRoute = PartidaIdRouteImport.update({
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/bingos': typeof BingosRoute
+  '/login': typeof LoginRoute
   '/odds-baixas': typeof OddsBaixasRoute
   '/zebras': typeof ZebrasRoute
   '/partida/$id': typeof PartidaIdRoute
@@ -51,6 +58,7 @@ export interface FileRoutesByFullPath {
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/bingos': typeof BingosRoute
+  '/login': typeof LoginRoute
   '/odds-baixas': typeof OddsBaixasRoute
   '/zebras': typeof ZebrasRoute
   '/partida/$id': typeof PartidaIdRoute
@@ -59,21 +67,36 @@ export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/bingos': typeof BingosRoute
+  '/login': typeof LoginRoute
   '/odds-baixas': typeof OddsBaixasRoute
   '/zebras': typeof ZebrasRoute
   '/partida/$id': typeof PartidaIdRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/bingos' | '/odds-baixas' | '/zebras' | '/partida/$id'
+  fullPaths:
+    | '/'
+    | '/bingos'
+    | '/login'
+    | '/odds-baixas'
+    | '/zebras'
+    | '/partida/$id'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/bingos' | '/odds-baixas' | '/zebras' | '/partida/$id'
-  id: '__root__' | '/' | '/bingos' | '/odds-baixas' | '/zebras' | '/partida/$id'
+  to: '/' | '/bingos' | '/login' | '/odds-baixas' | '/zebras' | '/partida/$id'
+  id:
+    | '__root__'
+    | '/'
+    | '/bingos'
+    | '/login'
+    | '/odds-baixas'
+    | '/zebras'
+    | '/partida/$id'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   BingosRoute: typeof BingosRoute
+  LoginRoute: typeof LoginRoute
   OddsBaixasRoute: typeof OddsBaixasRoute
   ZebrasRoute: typeof ZebrasRoute
   PartidaIdRoute: typeof PartidaIdRoute
@@ -93,6 +116,13 @@ declare module '@tanstack/react-router' {
       path: '/odds-baixas'
       fullPath: '/odds-baixas'
       preLoaderRoute: typeof OddsBaixasRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/login': {
+      id: '/login'
+      path: '/login'
+      fullPath: '/login'
+      preLoaderRoute: typeof LoginRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/bingos': {
@@ -122,6 +152,7 @@ declare module '@tanstack/react-router' {
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   BingosRoute: BingosRoute,
+  LoginRoute: LoginRoute,
   OddsBaixasRoute: OddsBaixasRoute,
   ZebrasRoute: ZebrasRoute,
   PartidaIdRoute: PartidaIdRoute,
