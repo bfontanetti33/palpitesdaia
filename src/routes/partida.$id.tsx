@@ -47,6 +47,9 @@ function MatchPage() {
     hour: "2-digit",
     minute: "2-digit",
   });
+  const deep = buildDeepStats(match);
+
+
 
   return (
     <div className="min-h-screen">
