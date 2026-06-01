@@ -39,7 +39,7 @@ const FormDot = ({ r }: { r: "V" | "E" | "D" }) => {
 };
 
 function MatchPage() {
-  const { match } = Route.useLoaderData();
+  const { match } = Route.useLoaderData() as { match: Match };
   const dateStr = new Date(match.date).toLocaleString("pt-BR", {
     weekday: "long",
     day: "2-digit",
