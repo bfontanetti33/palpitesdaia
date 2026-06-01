@@ -91,14 +91,153 @@ function MatchPage() {
       </div>
 
       <main className="container-app py-8 space-y-8">
-        {/* Resumo */}
-        <section className="bg-card border border-border rounded-2xl p-6">
-          <h2 className="font-display font-extrabold text-xl mb-3 flex items-center gap-2">
-            <span className="w-1.5 h-6 bg-primary rounded-full" />
-            Resumo da IA
-          </h2>
-          <p className="text-muted-foreground leading-relaxed">{match.summary}</p>
+        {/* Análise Inteligente — destaque IA */}
+        <section className="rounded-2xl overflow-hidden border border-primary/30 shadow-lg shadow-primary/5">
+          <div className="bg-gradient-to-r from-primary to-primary/70 px-6 py-4 flex items-center gap-3 text-primary-foreground">
+            <div className="w-9 h-9 rounded-xl bg-white/15 grid place-items-center">
+              <Sparkles className="w-5 h-5" />
+            </div>
+            <div>
+              <div className="font-display font-extrabold">Análise Inteligente</div>
+              <div className="text-xs opacity-90">Powered by Inteligência Artificial · Palpites da I.A</div>
+            </div>
+          </div>
+          <div className="bg-card p-6 space-y-4 text-sm leading-relaxed text-muted-foreground">
+            <p>{match.summary}</p>
+            <p>
+              O <strong className="text-foreground">{match.home.name}</strong> {deep.homeNews}
+            </p>
+            <p>
+              Já o <strong className="text-foreground">{match.away.name}</strong> {deep.awayNews}
+            </p>
+          </div>
         </section>
+
+        {/* Estatísticas de cada time */}
+        <section className="grid md:grid-cols-2 gap-5">
+          {(["home", "away"] as const).map((side) => {
+            const t = match[side];
+            const s = deep.season[side];
+            return (
+              <div key={side} className="bg-card border border-border rounded-2xl overflow-hidden">
+                <div className={`px-5 py-3 flex items-center gap-2 ${side === "home" ? "bg-primary/10" : "bg-gold/10"}`}>
+                  <img src={t.logo} alt="" className="w-7 h-7 rounded-full" />
+                  <span className={`font-display font-bold ${side === "home" ? "text-primary" : "text-gold"}`}>
+                    {t.name}
+                  </span>
+                </div>
+                <div className="p-5 space-y-4">
+                  <div>
+                    <div className="text-xs font-semibold mb-2">Últimos 5 jogos — {match.league}</div>
+                    <div className="flex gap-1.5">
+                      {match.stats[side === "home" ? "homeForm" : "awayForm"].map((r, i) => (
+                        <FormDot key={i} r={r} />
+                      ))}
+                    </div>
+                  </div>
+                  <div className="bg-secondary/40 rounded-xl p-4">
+                    <div className="text-xs font-semibold mb-3">Estatísticas da temporada</div>
+                    <StatRow label="Jogos" value={s.games} />
+                    <StatRow label="Vitórias" value={s.wins} valueClass="text-confidence-high" />
+                    <StatRow label="Empates" value={s.draws} valueClass="text-confidence-mid" />
+                    <StatRow label="Derrotas" value={s.losses} valueClass="text-destructive" />
+                    <div className="h-px bg-border my-2" />
+                    <StatRow label="Gols marcados" value={s.gf} valueClass="text-confidence-high" />
+                    <StatRow label="Gols sofridos" value={s.ga} valueClass="text-destructive" />
+                  </div>
+                </div>
+              </div>
+            );
+          })}
+        </section>
+
+        {/* Splits Casa / Fora */}
+        <section className="grid md:grid-cols-2 gap-5">
+          {(["home", "away"] as const).map((side) => {
+            const t = match[side];
+            const s = deep.split[side];
+            return (
+              <div key={side} className="bg-card border border-border rounded-2xl overflow-hidden">
+                <div className={`px-5 py-3 flex items-center gap-2 ${side === "home" ? "bg-primary/10" : "bg-gold/10"}`}>
+                  <img src={t.logo} alt="" className="w-7 h-7 rounded-full" />
+                  <span className="font-display font-bold">
+                    {t.name} — {side === "home" ? "Em casa" : "Fora de casa"}
+                  </span>
+                </div>
+                <div className="p-5 grid grid-cols-2 gap-3">
+                  <MiniStat label="Vitórias" value={s.wins} accent="text-confidence-high" />
+                  <MiniStat label="Jogos" value={s.games} />
+                  <MiniStat label="Gols/jogo" value={s.gpg.toFixed(1)} accent={s.gpg >= 1 ? "text-primary" : "text-destructive"} />
+                  <MiniStat label="Taxa de vitória" value={`${s.winRate}%`} accent="text-confidence-high" />
+                </div>
+              </div>
+            );
+          })}
+        </section>
+
+        {/* Estatísticas de Apostas */}
+        <section className="bg-card border border-border rounded-2xl overflow-hidden">
+          <div className="bg-gold/10 px-5 py-3 flex items-center gap-2">
+            <TrendingUp className="w-5 h-5 text-gold" />
+            <span className="font-display font-bold">Estatísticas de apostas</span>
+          </div>
+          <div className="p-5 grid md:grid-cols-2 gap-5">
+            {(["home", "away"] as const).map((side) => {
+              const t = match[side];
+              const b = deep.betting[side];
+              return (
+                <div key={side} className="space-y-3">
+                  <div className="text-center font-display font-bold text-sm">{t.name}</div>
+                  <BetBar label="Ambos marcam (BTTS)" pct={b.btts} count={`${Math.round((b.btts / 100) * 18)} de 18 jogos`} color="bg-purple-500" />
+                  <BetBar label="Mais de 2.5 gols" pct={b.over} count={`${Math.round((b.over / 100) * 18)} de 18 jogos`} color="bg-confidence-high" />
+                  <BetBar label="Menos de 2.5 gols" pct={100 - b.over} count={`${18 - Math.round((b.over / 100) * 18)} de 18 jogos`} color="bg-orange-500" />
+                </div>
+              );
+            })}
+          </div>
+        </section>
+
+        {/* Histórico de Confrontos */}
+        <section className="bg-card border border-border rounded-2xl overflow-hidden">
+          <div className="px-5 py-3 flex items-center gap-2 bg-secondary/40">
+            <Trophy className="w-5 h-5 text-gold" />
+            <div>
+              <div className="font-display font-bold">Histórico de confrontos</div>
+              <div className="text-xs text-muted-foreground">Últimos {deep.h2h.length} jogos entre os times</div>
+            </div>
+          </div>
+          <div className="divide-y divide-border">
+            {deep.h2h.map((g, i) => (
+              <div key={i} className="px-5 py-3 grid grid-cols-[80px_1fr_auto_1fr] items-center gap-3 text-sm">
+                <span className="text-xs text-muted-foreground">{g.date}</span>
+                <span className={`text-right truncate ${g.hs > g.as ? "font-bold text-confidence-high" : ""}`}>
+                  {g.home}
+                </span>
+                <span className="font-display font-bold bg-secondary rounded-md px-3 py-1">
+                  {g.hs} <span className="text-muted-foreground mx-1">-</span> {g.as}
+                </span>
+                <span className={`truncate ${g.as > g.hs ? "font-bold text-confidence-high" : ""}`}>
+                  {g.away}
+                </span>
+              </div>
+            ))}
+          </div>
+        </section>
+
+        {/* Total de Gols Previsto */}
+        <section className="bg-card border border-border rounded-2xl p-8 text-center">
+          <div className="inline-flex items-center gap-2 text-xs font-bold uppercase tracking-wider text-muted-foreground mb-4">
+            <Target className="w-4 h-4 text-primary" />
+            Total de gols previsto pela IA
+          </div>
+          <div className="mx-auto w-32 h-32 rounded-full bg-gradient-to-br from-primary to-gold grid place-items-center font-display font-extrabold text-5xl text-white shadow-xl shadow-primary/30">
+            {deep.predictedGoals}
+          </div>
+          <p className="text-sm text-muted-foreground mt-4">
+            Estimativa baseada em ataque, defesa, forma e histórico recente dos dois times.
+          </p>
+        </section>
+
 
         {/* Mercados */}
         <section>
