@@ -245,7 +245,7 @@ function Home() {
               <StatTile icon={BarChart3} label="Média de gols" value={example.stats.avgGoals.toFixed(1)} />
               <StatTile icon={Target} label="Escanteios/jogo" value={example.stats.avgCorners.toFixed(1)} />
               <StatTile icon={Users} label="Confronto direto" value={example.stats.h2h} small />
-              <StatTile icon={Whistle} label="Árbitro" value={`${example.refereeStats.cardsPerGame} 🟨/jogo`} />
+              <StatTile icon={Gavel} label="Árbitro" value={`${example.refereeStats.cardsPerGame} 🟨/jogo`} />
             </div>
           </div>
         </div>
