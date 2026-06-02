@@ -1,7 +1,7 @@
 import { Link } from "@tanstack/react-router";
 import { Menu, Sparkles, Trophy, Target, Zap } from "lucide-react";
 import { useState } from "react";
-import logoAsset from "@/assets/logo-aguia.jpg.asset.json";
+import logoUrl from "@/assets/logo-piata.png";
 
 const navItems = [
   { to: "/", label: "Partidas", icon: Trophy },
@@ -18,14 +18,14 @@ export function Header() {
         <div className="container-app flex items-center justify-between h-16">
           <Link to="/" className="flex items-center gap-2.5 font-display font-extrabold text-lg">
             <img
-              src={logoAsset.url}
+              src={logoUrl}
               alt="Palpites da I.A"
               width={40}
               height={40}
-              className="w-10 h-10 object-cover rounded-lg drop-shadow-[0_0_14px_rgba(220,38,38,0.45)]"
+              className="w-10 h-10 object-contain drop-shadow-[0_0_12px_rgba(34,197,94,0.35)]"
             />
             <span className="tracking-tight">
-              Palpites <span className="text-brand">da I.A</span>
+              Palpites <span className="text-primary">da I.A</span>
             </span>
           </Link>
 
