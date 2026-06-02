@@ -254,7 +254,7 @@ function MatchPage() {
                     <div className="text-xs text-muted-foreground font-semibold uppercase tracking-wide">{m.market}</div>
                     <div className="font-display font-bold text-lg mt-0.5">{m.pick}</div>
                   </div>
-                  <ConfidenceBadge level={m.confidence} compact />
+                  <ConfidenceBadge level={m.confidence} chance={m.chance} compact />
                 </div>
                 <p className="text-sm text-muted-foreground">{m.reason}</p>
                 {m.odd && (

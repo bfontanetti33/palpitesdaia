@@ -6,6 +6,7 @@ export interface MarketPick {
   confidence: Confidence;
   reason: string;
   odd?: number;
+  chance?: number;
 }
 
 export interface Match {
@@ -55,6 +56,7 @@ const baseMarkets = (homeFav: boolean): MarketPick[] => [
     market: "Resultado (1X2)",
     pick: homeFav ? "Vitória do mandante" : "Dupla chance visitante (X2)",
     confidence: "ALTA",
+    chance: 78,
     reason: "Mandante venceu 4 dos últimos 5 em casa. Visitante perdeu 3 fora seguidos.",
     odd: homeFav ? 1.75 : 1.55,
   },
@@ -62,6 +64,7 @@ const baseMarkets = (homeFav: boolean): MarketPick[] => [
     market: "Ambas marcam",
     pick: "Sim",
     confidence: "ALTA",
+    chance: 81,
     reason: "Os dois times marcaram em 7 dos últimos 8 confrontos.",
     odd: 1.65,
   },
@@ -69,6 +72,7 @@ const baseMarkets = (homeFav: boolean): MarketPick[] => [
     market: "Total de gols",
     pick: "Mais de 2.5",
     confidence: "MÉDIA",
+    chance: 67,
     reason: "Média combinada de 3.1 gols/jogo nas últimas 6 partidas.",
     odd: 1.85,
   },
@@ -76,6 +80,7 @@ const baseMarkets = (homeFav: boolean): MarketPick[] => [
     market: "Placar exato",
     pick: homeFav ? "2x1 mandante" : "1x1",
     confidence: "BAIXA",
+    chance: 22,
     reason: "Placar mais provável segundo o modelo de Poisson aplicado.",
     odd: 7.5,
   },
@@ -83,6 +88,7 @@ const baseMarkets = (homeFav: boolean): MarketPick[] => [
     market: "Resultado 1º tempo",
     pick: "Empate",
     confidence: "MÉDIA",
+    chance: 58,
     reason: "65% dos jogos do mandante terminaram empatados no 1º tempo.",
     odd: 2.1,
   },
@@ -90,6 +96,7 @@ const baseMarkets = (homeFav: boolean): MarketPick[] => [
     market: "Chance dupla",
     pick: homeFav ? "1X" : "X2",
     confidence: "ALTA",
+    chance: 88,
     reason: "Margem de segurança para o time melhor posicionado.",
     odd: 1.3,
   },
@@ -97,6 +104,7 @@ const baseMarkets = (homeFav: boolean): MarketPick[] => [
     market: "Escanteios — Total",
     pick: "Mais de 9.5",
     confidence: "ALTA",
+    chance: 74,
     reason: "Média de 11.2 escanteios nos jogos do mandante em casa.",
     odd: 1.7,
   },
@@ -104,6 +112,7 @@ const baseMarkets = (homeFav: boolean): MarketPick[] => [
     market: "Cartões — Total",
     pick: "Mais de 4.5",
     confidence: "MÉDIA",
+    chance: 61,
     reason: "Árbitro escalado dá média de 5.2 cartões por jogo.",
     odd: 1.9,
   },
@@ -111,6 +120,7 @@ const baseMarkets = (homeFav: boolean): MarketPick[] => [
     market: "Handicap asiático",
     pick: homeFav ? "Mandante -1" : "Visitante +1",
     confidence: "MÉDIA",
+    chance: 55,
     reason: "Diferença média de gols entre os times nas últimas 10 partidas.",
     odd: 2.0,
   },
@@ -118,6 +128,7 @@ const baseMarkets = (homeFav: boolean): MarketPick[] => [
     market: "Cartão vermelho",
     pick: "Não",
     confidence: "ALTA",
+    chance: 86,
     reason: "Apenas 1 vermelho nos últimos 12 jogos entre essas equipes.",
     odd: 1.25,
   },
@@ -125,6 +136,7 @@ const baseMarkets = (homeFav: boolean): MarketPick[] => [
     market: "Jogador a marcar (qualquer momento)",
     pick: "Vinícius Jr. (mandante)",
     confidence: "ALTA",
+    chance: 72,
     reason: "Marcou em 6 dos últimos 7 jogos como titular.",
     odd: 1.95,
   },
@@ -132,6 +144,7 @@ const baseMarkets = (homeFav: boolean): MarketPick[] => [
     market: "Jogador a tomar cartão",
     pick: "Casemiro (visitante)",
     confidence: "MÉDIA",
+    chance: 49,
     reason: "Tomou cartão em 4 dos últimos 6 jogos contra equipes brasileiras.",
     odd: 2.4,
   },

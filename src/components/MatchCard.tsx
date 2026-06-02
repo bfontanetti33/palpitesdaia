@@ -53,7 +53,7 @@ export function MatchCard({ match }: { match: Match }) {
                 <div className="text-xs text-muted-foreground">{m.market}</div>
                 <div className="font-semibold text-sm truncate">{m.pick}</div>
               </div>
-              <ConfidenceBadge level={m.confidence} compact />
+              <ConfidenceBadge level={m.confidence} chance={m.chance} compact />
             </div>
           ))}
         </div>
