@@ -6,6 +6,7 @@ export interface MarketPick {
   confidence: Confidence;
   reason: string;
   odd?: number;
+  chance?: number;
 }
 
 export interface Match {
