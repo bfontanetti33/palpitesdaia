@@ -12,7 +12,7 @@ import {
   Target,
   CheckCircle2,
   BarChart3,
-  Whistle,
+  Gavel,
   Users,
   Flame,
 } from "lucide-react";
