@@ -26,6 +26,8 @@
   --color-accent-foreground: var(--accent-foreground);
   --color-gold: var(--gold);
   --color-gold-foreground: var(--gold-foreground);
+  --color-brand: var(--brand);
+  --color-brand-foreground: var(--brand-foreground);
   --color-confidence-high: var(--confidence-high);
   --color-confidence-mid: var(--confidence-mid);
   --color-confidence-low: var(--confidence-low);
@@ -67,6 +69,10 @@
   /* Gold for premium / special */
   --gold: oklch(0.82 0.15 85);
   --gold-foreground: oklch(0.18 0.02 80);
+
+  /* Brand crimson — eagle / AGU.IA identity */
+  --brand: oklch(0.62 0.22 25);
+  --brand-foreground: oklch(0.98 0.01 25);
 
   --confidence-high: oklch(0.72 0.18 145);
   --confidence-mid: oklch(0.82 0.15 85);
