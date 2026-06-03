@@ -1,7 +1,8 @@
 import { Link } from "@tanstack/react-router";
 import { Menu, Sparkles, Trophy, Target, Zap } from "lucide-react";
 import { useState } from "react";
-import logoUrl from "@/assets/logo-piata.png";
+import logoAsset from "@/assets/logo-aguia-vermelha.jpeg.asset.json";
+const logoUrl = logoAsset.url;
 
 const navItems = [
   { to: "/", label: "Partidas", icon: Trophy },
@@ -22,7 +23,7 @@ export function Header() {
               alt="Palpites da I.A"
               width={40}
               height={40}
-              className="w-10 h-10 object-contain drop-shadow-[0_0_12px_rgba(34,197,94,0.35)]"
+              className="w-10 h-10 object-cover rounded-lg drop-shadow-[0_0_12px_rgba(239,68,68,0.35)]"
             />
             <span className="tracking-tight">
               Palpites <span className="text-primary">da I.A</span>
