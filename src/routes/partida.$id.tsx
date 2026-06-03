@@ -291,25 +291,37 @@ function MatchPage() {
             Análise por mercado
           </h2>
 
-          <div className="grid md:grid-cols-2 gap-4">
-            {match.allMarkets.map((m) => (
-              <div key={m.market} className="bg-card border border-border rounded-2xl p-5">
-                <div className="flex items-start justify-between gap-3 mb-3">
-                  <div className="min-w-0">
-                    <div className="text-xs text-muted-foreground font-semibold uppercase tracking-wide">{m.market}</div>
-                    <div className="font-display font-bold text-lg mt-0.5">{m.pick}</div>
+          {!hasMarkets ? (
+            <div className="bg-card border border-dashed border-border rounded-2xl p-8 text-center text-sm text-muted-foreground">
+              {recQuery.isLoading ? (
+                <><Loader2 className="w-4 h-4 inline-block animate-spin mr-2" />A IA está analisando esta partida...</>
+              ) : recQuery.isError ? (
+                <>A análise da IA ficará disponível em breve para esta partida.</>
+              ) : (
+                <>Nenhum mercado recomendado pela IA no momento.</>
+              )}
+            </div>
+          ) : (
+            <div className="grid md:grid-cols-2 gap-4">
+              {match.allMarkets.map((m) => (
+                <div key={m.market} className="bg-card border border-border rounded-2xl p-5">
+                  <div className="flex items-start justify-between gap-3 mb-3">
+                    <div className="min-w-0">
+                      <div className="text-xs text-muted-foreground font-semibold uppercase tracking-wide">{m.market}</div>
+                      <div className="font-display font-bold text-lg mt-0.5">{m.pick}</div>
+                    </div>
+                    <ConfidenceBadge level={m.confidence} chance={m.chance} compact />
                   </div>
-                  <ConfidenceBadge level={m.confidence} chance={m.chance} compact />
+                  <p className="text-sm text-muted-foreground">{m.reason}</p>
+                  {m.odd && (
+                    <div className="mt-3 inline-flex items-center gap-2 text-xs bg-gold/15 text-gold rounded-full px-2.5 py-1 font-bold">
+                      Odd estimada: {m.odd.toFixed(2)}
+                    </div>
+                  )}
                 </div>
-                <p className="text-sm text-muted-foreground">{m.reason}</p>
-                {m.odd && (
-                  <div className="mt-3 inline-flex items-center gap-2 text-xs bg-gold/15 text-gold rounded-full px-2.5 py-1 font-bold">
-                    Odd estimada: {m.odd.toFixed(2)}
-                  </div>
-                )}
-              </div>
-            ))}
-          </div>
+              ))}
+            </div>
+          )}
         </section>
 
         {/* Stats */}
