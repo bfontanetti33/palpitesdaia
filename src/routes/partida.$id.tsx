@@ -1,28 +1,29 @@
-import { createFileRoute, notFound, Link } from "@tanstack/react-router";
-import { ArrowLeft, Calendar, MapPin, Users, Flag as WhistleIcon, AlertTriangle, TrendingUp, Trophy, Target, Sparkles } from "lucide-react";
-import type { Match, MarketPick } from "@/lib/mock-data";
+import { createFileRoute, Link } from "@tanstack/react-router";
+import { useQuery } from "@tanstack/react-query";
+import { ArrowLeft, Calendar, MapPin, Users, Flag as WhistleIcon, TrendingUp, Trophy, Target, Sparkles, Loader2 } from "lucide-react";
+import type { Match } from "@/lib/mock-data";
 import { Header } from "@/components/Header";
 import { Footer } from "@/components/Footer";
 import { ConfidenceBadge } from "@/components/ConfidenceBadge";
-import { matches } from "@/lib/mock-data";
+import { fetchJogo, fetchRecomendacao, apiDetalheToMatch } from "@/lib/api/copa";
 
 export const Route = createFileRoute("/partida/$id")({
-  head: ({ params }) => {
-    const m = matches.find((x) => x.id === params.id);
-    const title = m ? `${m.home.name} x ${m.away.name} — Análise da IA` : "Partida";
-    return {
-      meta: [
-        { title: `${title} | Palpites da I.A` },
-        { name: "description", content: m?.summary ?? "Análise completa gerada por IA." },
-      ],
-    };
-  },
-  loader: ({ params }) => {
-    const match = matches.find((m) => m.id === params.id);
-    if (!match) throw notFound();
-    return { match };
-  },
+  head: ({ params }) => ({
+    meta: [
+      { title: `Análise da partida — Palpites da I.A` },
+      { name: "description", content: `Análise completa da partida ${params.id} gerada por IA.` },
+    ],
+  }),
   component: MatchPage,
+  errorComponent: ({ error }) => (
+    <div className="min-h-screen grid place-items-center p-6 text-center">
+      <div>
+        <p className="font-display font-bold text-lg mb-2">Erro ao carregar partida</p>
+        <p className="text-sm text-muted-foreground">{error.message}</p>
+        <Link to="/" className="inline-block mt-4 text-primary underline">Voltar</Link>
+      </div>
+    </div>
+  ),
   notFoundComponent: () => (
     <div className="min-h-screen grid place-items-center">Partida não encontrada</div>
   ),
@@ -38,7 +39,50 @@ const FormDot = ({ r }: { r: "V" | "E" | "D" }) => {
 };
 
 function MatchPage() {
-  const { match } = Route.useLoaderData() as { match: Match };
+  const { id: slug } = Route.useParams();
+
+  const jogoQuery = useQuery({
+    queryKey: ["copa", "jogo", slug],
+    queryFn: () => fetchJogo(slug),
+    staleTime: 60_000,
+  });
+
+  const recQuery = useQuery({
+    queryKey: ["copa", "recomendacao", slug],
+    queryFn: () => fetchRecomendacao(slug),
+    staleTime: 5 * 60_000,
+    retry: 1,
+    enabled: !!jogoQuery.data,
+  });
+
+  if (jogoQuery.isLoading) {
+    return (
+      <div className="min-h-screen">
+        <Header />
+        <div className="container-app py-20 text-center text-muted-foreground">
+          <Loader2 className="w-6 h-6 animate-spin inline-block mr-2" />
+          Carregando partida...
+        </div>
+        <Footer />
+      </div>
+    );
+  }
+
+  if (jogoQuery.isError || !jogoQuery.data) {
+    return (
+      <div className="min-h-screen">
+        <Header />
+        <div className="container-app py-20 text-center">
+          <p className="text-destructive font-semibold mb-2">Não foi possível carregar essa partida.</p>
+          <p className="text-xs text-muted-foreground">{(jogoQuery.error as Error)?.message}</p>
+          <Link to="/" className="inline-block mt-4 text-primary underline">Voltar para a home</Link>
+        </div>
+        <Footer />
+      </div>
+    );
+  }
+
+  const match: Match = apiDetalheToMatch(jogoQuery.data, recQuery.data);
   const dateStr = new Date(match.date).toLocaleString("pt-BR", {
     weekday: "long",
     day: "2-digit",
@@ -48,6 +92,7 @@ function MatchPage() {
     timeZone: "America/Sao_Paulo",
   });
   const deep = buildDeepStats(match);
+  const hasMarkets = match.allMarkets.length > 0;
 
 
 
