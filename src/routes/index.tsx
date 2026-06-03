@@ -1,10 +1,10 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
-import { useState } from "react";
-import { Brain, Sparkles, ShieldCheck, Database, TrendingUp, Trophy, Zap, ArrowRight } from "lucide-react";
+import { useQuery } from "@tanstack/react-query";
+import { Brain, Sparkles, ShieldCheck, Database, TrendingUp, Trophy, Zap, ArrowRight, Loader2 } from "lucide-react";
 import { Header } from "@/components/Header";
 import { Footer } from "@/components/Footer";
 import { MatchCard } from "@/components/MatchCard";
-import { matches, leagues } from "@/lib/mock-data";
+import { fetchJogos, apiJogoToMatch } from "@/lib/api/copa";
 
 export const Route = createFileRoute("/")({
   head: () => ({
@@ -23,8 +23,13 @@ export const Route = createFileRoute("/")({
 });
 
 function Home() {
-  const [filter, setFilter] = useState("all");
-  const visible = filter === "all" ? matches : matches.filter((m) => m.league === filter);
+  const { data: jogos, isLoading, isError, error, refetch } = useQuery({
+    queryKey: ["copa", "jogos"],
+    queryFn: fetchJogos,
+    staleTime: 60_000,
+  });
+
+  const matches = (jogos ?? []).map(apiJogoToMatch);
 
   return (
     <div className="min-h-screen">
@@ -57,7 +62,7 @@ function Home() {
               href="#partidas"
               className="inline-flex items-center gap-2 px-6 py-3.5 rounded-xl bg-secondary text-foreground font-bold hover:bg-secondary/70"
             >
-              Ver partidas de hoje
+              Ver partidas
               <ArrowRight className="w-4 h-4" />
             </a>
           </div>
@@ -66,43 +71,38 @@ function Home() {
             <ProofCard icon={ShieldCheck} title="Precisão recente" big="78%" desc="de acerto nos resultados mais apostados da semana" />
             <ProofCard icon={Database} title="IA treinada com jogos reais" big="+10.000" desc="partidas analisadas pra gerar previsões mais precisas" />
             <ProofCard icon={TrendingUp} title="Melhora a cada rodada" big="24/7" desc="o modelo aprende e ajusta as previsões a cada jogo" />
-            <ProofCard icon={Trophy} title="Principais ligas cobertas" big="1.200+" desc="Brasileirão, Premier, Champions, La Liga, Libertadores e mais" />
+            <ProofCard icon={Trophy} title="Cobertura Copa do Mundo" big="72" desc="partidas analisadas no torneio completo" />
           </div>
         </div>
       </section>
 
-      <div className="sticky top-16 z-30 bg-background/95 backdrop-blur border-b border-border">
-        <div className="container-app">
-          <div className="flex gap-2 overflow-x-auto py-3 scrollbar-none">
-            {leagues.map((l) => (
-              <button
-                key={l.id}
-                onClick={() => setFilter(l.id)}
-                className={`flex-shrink-0 px-4 py-2 rounded-full text-sm font-semibold transition-colors ${
-                  filter === l.id
-                    ? "bg-primary text-primary-foreground"
-                    : "bg-secondary text-muted-foreground hover:text-foreground"
-                }`}
-              >
-                <span className="mr-1.5">{l.emoji}</span>
-                {l.name}
-              </button>
-            ))}
-          </div>
-        </div>
-      </div>
-
       <main id="partidas" className="container-app py-8">
         <div className="flex items-center justify-between mb-6">
-          <h2 className="font-display font-extrabold text-2xl">Partidas do dia</h2>
-          <span className="text-sm text-muted-foreground">{visible.length} jogos</span>
+          <h2 className="font-display font-extrabold text-2xl">Partidas da Copa</h2>
+          <span className="text-sm text-muted-foreground">
+            {isLoading ? "carregando..." : `${matches.length} jogos`}
+          </span>
         </div>
 
-        {visible.length === 0 ? (
-          <p className="text-muted-foreground text-center py-12">Nenhuma partida nesta liga hoje.</p>
+        {isLoading ? (
+          <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-5">
+            {Array.from({ length: 6 }).map((_, i) => (
+              <div key={i} className="h-72 rounded-2xl bg-card border border-border animate-pulse" />
+            ))}
+          </div>
+        ) : isError ? (
+          <div className="text-center py-12 space-y-3">
+            <p className="text-destructive font-semibold">Não consegui carregar os jogos.</p>
+            <p className="text-xs text-muted-foreground">{(error as Error)?.message}</p>
+            <button onClick={() => refetch()} className="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-primary text-primary-foreground font-semibold">
+              <Loader2 className="w-4 h-4" /> Tentar de novo
+            </button>
+          </div>
+        ) : matches.length === 0 ? (
+          <p className="text-muted-foreground text-center py-12">Nenhuma partida disponível.</p>
         ) : (
           <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-5">
-            {visible.map((m) => (
+            {matches.map((m) => (
               <MatchCard key={m.id} match={m} />
             ))}
           </div>
